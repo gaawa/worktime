@@ -10,6 +10,8 @@ function worktime_report {
     printf "$WORK $STATUS since:\n$T_DELTA_MSG\n"
 }
 
-function worktime_complete_report {
-    printf "empty function"
+function worktime_total_report {
+    FILENAME=$(ls ${DIR}/${WORK} | tail -1)
+    FILE="${DIR}/${WORK}/${FILENAME}"
+    $(dirname "$BASH_SOURCE")/calc-time.awk $FILE | fold -w 80 -s $DESC
 }

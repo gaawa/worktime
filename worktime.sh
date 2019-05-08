@@ -24,6 +24,10 @@ then
 elif [[ $1 == stop ]]
 then
     worktime_stop
+elif [[ $1 == report ]]
+then
+    WORK=$2
+    worktime_total_report
 else
     printf "incorrect input parameter"
 fi

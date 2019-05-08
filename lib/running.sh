@@ -76,6 +76,7 @@ function worktime_stop {
         MSG+="Desc: $DESC \n\n\n"
         printf "$MSG" >> $FILE  # append to the file
         rm $FILE_TS
+        worktime_total_report
     else
         echo "nothing to stop"
     fi
