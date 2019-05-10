@@ -11,7 +11,16 @@ function worktime_report {
 }
 
 function worktime_total_report {
-    FILENAME=$(ls ${DIR}/${WORK} | tail -1)
-    FILE="${DIR}/${WORK}/${FILENAME}"
-    $(dirname "$BASH_SOURCE")/calc-time.awk $FILE | fold -w 80 -s $DESC
+    FILE=$1
+    $(dirname "$BASH_SOURCE")/calc-time.awk $FILE | fold -w 80 -s > /tmp/worktime-report
+    readarray -t T_STAMPS <<< $(awk '/started at:|ended at:/{print $0}' /tmp/worktime-report)
+    ARR_LEN=${#T_STAMPS[@]}
+    echo $ARR_LEN
+    for (( i=0; i<${ARR_LEN}; i++ ))
+    do
+        T_STAMP=(${T_STAMPS[i]})
+        T_DATE[2]="${T_STAMP[@]:0:2} $(date -d "@${T_STAMP[2]}" +"%Y-%m-%d %H:%M:%S")"
+        eval 'sed -i '"'"'s/'${T_STAMP[@]}'/'${T_DATE[@]}'/'"'"' /tmp/worktime-report' # ebin
+    done
+    cat /tmp/worktime-report
 }

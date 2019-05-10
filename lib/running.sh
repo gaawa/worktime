@@ -72,11 +72,12 @@ function worktime_stop {
         echo "$STATUS $(date +%s)" >> $FILE
 
         read -p "Desc: " DESC
+        echo ""
         MSG="\n"
         MSG+="Desc: $DESC \n\n\n"
         printf "$MSG" >> $FILE  # append to the file
         rm $FILE_TS
-        worktime_total_report
+        worktime_total_report $FILE
     else
         echo "nothing to stop"
     fi

@@ -29,8 +29,10 @@ BEGIN {
             t_pause += $2 - timestamp;
         t_total += $2 - t_start;
 
+        print "started at: " t_start
         print "worked for " format_time(t_work)
         print "paused for " format_time(t_pause)
+        print "ended at: " $2
     }
     if ($1 == "Desc:"){
         $1="";
